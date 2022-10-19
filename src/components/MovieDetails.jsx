@@ -1,7 +1,6 @@
 import { useParams, Link, useLocation, Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useEffect } from 'react';
 
 const API_KEY = 'cc1be8043ea5c323822776e71613d749';
 

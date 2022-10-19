@@ -16,7 +16,6 @@ const Movies = () => {
   };
 
   useEffect(() => {
-
     const prevQueryResult = JSON.parse(
       window.localStorage.getItem('list', JSON.stringify(searchList))
     );
@@ -27,7 +26,7 @@ const Movies = () => {
       return;
     }
     setSearchList(prevQueryResult);
-  }, []);
+  }, [query, searchList]);
 
   const handleClick = async () => {
     setSearchParams(input !== '' ? { query: input } : {});
