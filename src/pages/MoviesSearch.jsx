@@ -16,19 +16,23 @@ const Movies = () => {
   };
 
   useEffect(() => {
+    // console.log(searchParams.get('query'));
+    searchParams.get('query') !== null
+      ? setInput(searchParams.get('query'))
+      : setInput('');
     const prevQueryResult = JSON.parse(
       window.localStorage.getItem('list', JSON.stringify(searchList))
     );
-    if (!prevQueryResult) {
+    if (!prevQueryResult || !query) {
       return;
     }
-    if (!query) {
-      return;
-    }
+
     setSearchList(prevQueryResult);
-  }, [query, searchList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = async () => {
+    window.localStorage.removeItem('list');
     setSearchParams(input !== '' ? { query: input } : {});
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${input}`,

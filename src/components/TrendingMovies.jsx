@@ -9,6 +9,7 @@ const TrendMovies = () => {
 
   useEffect(() => {
     getMovies();
+    
   }, []);
 
   async function getMovies() {
