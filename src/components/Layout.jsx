@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Box } from './Box';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,8 +7,10 @@ import AppBar from './AppBar';
 const Layout = () => {
   return (
     <DivStyles>
-      <AppBar /> 
-      <Outlet />
+      <AppBar />
+      <Suspense fallback="Loading...">
+        <Outlet />
+      </Suspense>
     </DivStyles>
   );
 };

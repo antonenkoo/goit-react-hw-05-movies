@@ -10,7 +10,6 @@ const navItems = [
 const NavItem = styled(NavLink)`
   display: flex;
   align-items: center;
-  /* gap: ${p => p.theme.space[1]}px; */
   padding: ${p => p.theme.space[3]}px;
   border-radius: 4px;
   text-decoration: none;

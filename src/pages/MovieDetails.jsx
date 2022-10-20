@@ -1,5 +1,5 @@
 import { useParams, Link, useLocation, Outlet } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import styled from 'styled-components';
 
 const API_KEY = 'cc1be8043ea5c323822776e71613d749';
@@ -28,26 +28,27 @@ const MovieDetails = () => {
       <Link to={location?.state?.from ?? '/home'}>
         <button>← Go back</button>
       </Link>
+      <Suspense fallback={<div>LOADING...</div>}>
+        <MovieInfo>
+          <PosterStyled
+            src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+            alt=""
+          />
+          <div>
+            <h2>{movie.original_title}</h2>
+            <p>User score: {Math.floor(movie.vote_average * 10)}%</p>
+            <h4>Overview</h4>
+            <p>{movie.overview}</p>
+            <h4>Genres</h4>
 
-      <MovieInfo>
-        <PosterStyled
-          src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
-          alt=""
-        />
-        <div>
-          <h2>{movie.original_title}</h2>
-          <p>User score: {Math.floor(movie.vote_average * 10)}%</p>
-          <h4>Overview</h4>
-          <p>{movie.overview}</p>
-          <h4>Genres</h4>
-
-          <GenresStyled>
-            {movie?.genres?.map(genre => (
-              <LiStyled key={genre.id}>{genre.name}</LiStyled>
-            ))}
-          </GenresStyled>
-        </div>
-      </MovieInfo>
+            <GenresStyled>
+              {movie?.genres?.map(genre => (
+                <LiStyled key={genre.id}>{genre.name}</LiStyled>
+              ))}
+            </GenresStyled>
+          </div>
+        </MovieInfo>
+      </Suspense>
       <ul>
         <li>
           <strong>Additional information</strong>
@@ -59,7 +60,9 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </main>
   );
 };
