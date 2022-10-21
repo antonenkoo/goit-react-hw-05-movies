@@ -1,6 +1,7 @@
 // import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import notFound from '../imgs/photo_2022-10-21_12-18-13.jpg';
 
 const Movies = () => {
   const [input, setInput] = useState('');
@@ -20,6 +21,9 @@ const Movies = () => {
     searchParams.get('query') !== null
       ? setInput(searchParams.get('query'))
       : setInput('');
+
+    console.log(JSON.parse(window.localStorage.getItem('list')) || 'lol');
+
     const prevQueryResult = JSON.parse(
       window.localStorage.getItem('list', JSON.stringify(searchList))
     );
@@ -55,20 +59,27 @@ const Movies = () => {
         </button>
       </form>
       <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {searchList.map(searchItem => (
-          <li key={searchItem.id} style={{ margin: '10px' }}>
-            <Link to={`${searchItem.id}`} state={{ from: location }}>
-              <div style={{ width: '100px' }}>
-                <img
-                  style={{ width: '100px' }}
-                  src={`https://image.tmdb.org/t/p/w342/${searchItem.poster_path}`}
-                  alt=""
-                />
-                <p>{searchItem.title}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
+        {searchList.map(searchItem => {
+          console.log(!searchItem.poster_path);
+          return (
+            <li key={searchItem.id} style={{ margin: '10px' }}>
+              <Link to={`${searchItem.id}`} state={{ from: location }}>
+                <div style={{ width: '100px' }}>
+                  <img
+                    style={{ width: '100px' }}
+                    src={
+                      searchItem.poster_path
+                        ? `https://image.tmdb.org/t/p/w342/${searchItem.poster_path}`
+                        : notFound
+                    }
+                    alt=""
+                  />
+                  <p>{searchItem.title}</p>
+                </div>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </main>
   );

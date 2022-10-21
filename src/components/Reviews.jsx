@@ -24,14 +24,16 @@ const Reviews = () => {
     const data = await response.json();
     setReviews(data.results);
   }
+  console.log(reviews.map(r => console.log(r.author_details.avatar_path)));
 
   return (
     <div>
       <ul>
         {reviews.length !== 0 ? (
           reviews.map(review => (
-            <li key={review.author_details.username}>
+            <li key={review.id}>
               <img src={`${review.author_details.avatar_path}`} alt="" />
+
               <PStyled>
                 <strong>Author: {review.author}</strong>
               </PStyled>

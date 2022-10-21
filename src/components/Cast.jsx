@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import notFound from '../imgs/photo_2022-10-21_12-18-13.jpg';
 
 const Cast = () => {
   const [cast, setCast] = useState([]);
@@ -30,7 +31,11 @@ const Cast = () => {
         {cast.map(actor => (
           <ActorItem key={actor.id}>
             <ActorPhoto
-              src={`https://image.tmdb.org/t/p/w342/${actor.profile_path}`}
+              src={
+                actor.profile_path
+                  ? `https://image.tmdb.org/t/p/w342/${actor.profile_path}`
+                  : notFound
+              }
               alt=""
             />
             <ActorDescription>{actor.name}</ActorDescription>
